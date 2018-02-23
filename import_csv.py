@@ -7,7 +7,8 @@ class ImportCSV:
     def import_data(self):
         import csv
         import os.path
-        if(os.path.isfile(self.target_csv_path) and target_csv_path.endswith('.csv')):
+        if(os.path.isfile(self.target_csv_path) and
+           target_csv_path.endswith('.csv')):
             # CRV - method used here found at:
             # https://stackoverflow.com/questions/24662571/python-import-csv-to-list
             with open(self.target_csv_path, 'r') as f:
