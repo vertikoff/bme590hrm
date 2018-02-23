@@ -5,8 +5,11 @@ class ImportCSV:
         self.import_data()
 
     def import_data(self):
-        # add check for .csv here
-        import csv
+        import csv, os.path
+        if(os.path.isfile(self.target_csv_path) == False):
+            raise ImportError("no file at: " + self.target_csv_path)
+        if(target_csv_path.endswith('.csv') == False):
+            raise ImportError(self.target_csv_path + ' is not type .csv')
         # CRV - method used here found at:
         #https://stackoverflow.com/questions/24662571/python-import-csv-to-list
         with open(self.target_csv_path, 'r') as f:
