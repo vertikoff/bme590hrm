@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# test_data
+test_data/
+
+# CRV testing and workspace file
+crv_workspace.py
+
 # Distribution / packaging
 .Python
 env/
