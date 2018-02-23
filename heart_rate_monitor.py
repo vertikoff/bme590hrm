@@ -10,6 +10,5 @@ class HeartRateMonitor:
         self.import_data()
 
     def import_data(self):
-        #try catch here for .csv extension
         from import_csv import ImportCSV
         self.list_data = ImportCSV(self.target_csv_path).data
