@@ -6,6 +6,7 @@ def test_import_csv():
     with pytest.raises(ImportError):
         ImportCSV('not_csv.txt')
 
+
 def test_voltage_extremes():
     import pytest
     from heart_rate_monitor import HeartRateMonitor

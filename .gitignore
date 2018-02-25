@@ -7,7 +7,10 @@ __pycache__/
 *.so
 
 # CRV test_data
-test_data/
+test_data/*
+
+# CRV test_data exceptions (needed for travis CI testing)
+!test_data/test_data1.csv
 
 # CRV testing and workspace file
 crv_workspace.py
