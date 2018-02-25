@@ -19,8 +19,8 @@ class HeartRateMonitor:
         min_voltage = None
         max_voltage = None
         for reading in self.list_data:
-            if(max_voltage == None or reading[1] > max_voltage):
+            if(max_voltage is None or reading[1] > max_voltage):
                 max_voltage = reading[1]
-            if(min_voltage == None or reading[1] < min_voltage):
+            if(min_voltage is None or reading[1] < min_voltage):
                 min_voltage = reading[1]
         self.voltage_extremes = (min_voltage, max_voltage)
