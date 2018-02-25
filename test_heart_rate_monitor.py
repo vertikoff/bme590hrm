@@ -16,6 +16,7 @@ def test_voltage_extremes():
     with pytest.raises(ImportError):
         HeartRateMonitor('fake_dir/not_real.csv').voltage_extremes
 
+
 def test_duration():
     import pytest
     from heart_rate_monitor import HeartRateMonitor
