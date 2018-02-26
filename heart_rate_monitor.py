@@ -9,8 +9,8 @@ class HeartRateMonitor:
         self.num_beats = None
         self.beats = None
         self.import_data()
-        #self.set_voltage_extremes()
-        #self.set_duration()
+        # self.set_voltage_extremes()
+        # self.set_duration()
 
     def import_data(self):
         from import_csv import ImportCSV
