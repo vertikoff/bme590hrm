@@ -15,6 +15,9 @@ test_data/*
 # CRV testing and workspace file
 crv_workspace.py
 
+# CRV second virtual env (for plotting)
+env2
+
 # CRV pytest
 .pytest_cache
 
