@@ -9,7 +9,7 @@ class HeartRateMonitor:
         self.num_beats = None
         self.beats = None
         self.import_data()
-        # self.set_voltage_extremes()
+        self.set_voltage_extremes()
         # self.set_duration()
 
     def import_data(self):
@@ -20,14 +20,8 @@ class HeartRateMonitor:
 
     def set_voltage_extremes(self):
         # CRV init max and min voltage tuple
-        min_voltage = None
-        max_voltage = None
-        for reading in self.list_data:
-            voltage = float(reading[1])
-            if(max_voltage is None or voltage > max_voltage):
-                max_voltage = voltage
-            if(min_voltage is None or voltage < min_voltage):
-                min_voltage = voltage
+        min_voltage = min(self.voltages)
+        max_voltage = max(self.voltages)
         self.voltage_extremes = (min_voltage, max_voltage)
 
     def set_duration(self):
