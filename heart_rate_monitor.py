@@ -1,19 +1,22 @@
 class HeartRateMonitor:
     def __init__(self, target_csv_path):
         self.target_csv_path = target_csv_path
-        self.list_data = None
+        self.timestamps = None
+        self.voltages = None
         self.mean_hr_bpm = None
         self.voltage_extremes = None
         self.duration = None
         self.num_beats = None
         self.beats = None
         self.import_data()
-        self.set_voltage_extremes()
-        self.set_duration()
+        #self.set_voltage_extremes()
+        #self.set_duration()
 
     def import_data(self):
         from import_csv import ImportCSV
-        self.list_data = ImportCSV(self.target_csv_path).data
+        imported_data = ImportCSV(self.target_csv_path)
+        self.timestamps = imported_data.timestamps
+        self.voltages = imported_data.voltages
 
     def set_voltage_extremes(self):
         # CRV init max and min voltage tuple
