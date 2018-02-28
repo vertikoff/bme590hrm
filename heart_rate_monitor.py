@@ -8,7 +8,6 @@ class HeartRateMonitor:
         self.duration = None
         self.num_beats = None
         self.beats = None
-        self.ts_heart_beats = None
         self.heart_beat_voltage = None
         self.import_data()
         self.set_voltage_extremes()
@@ -43,9 +42,11 @@ class HeartRateMonitor:
         # CRV using peakutils lib for peak detection
         # http://peakutils.readthedocs.io/en/latest/index.html
         indexes = peakutils.indexes(data, thres=threshold)
-        self.ts_heart_beats = []
+        self.beats = []
         self.heart_beat_voltages = []
         for index in indexes:
-            self.ts_heart_beats.append(self.timestamps[index])
+            self.beats.append(self.timestamps[index])
             self.heart_beat_voltages.append(self.voltages[index])
-        self.num_beats = len(self.ts_heart_beats)
+        self.num_beats = len(self.beats)
+        # CRV convert list to numpy array
+        self.beats = np.array(self.beats)
