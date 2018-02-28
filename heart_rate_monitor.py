@@ -8,9 +8,11 @@ class HeartRateMonitor:
         self.duration = None
         self.num_beats = None
         self.beats = None
+        self.heart_beat_voltage = None
         self.import_data()
         self.set_voltage_extremes()
         self.set_duration()
+        self.find_beats()
 
     def import_data(self):
         from import_csv import ImportCSV
@@ -31,3 +33,20 @@ class HeartRateMonitor:
         # CRV - calculating the diff here just incase there is an offset error
         # (earliest ts in data set NOT 0)
         self.duration = max_ts - min_ts
+
+    def find_beats(self):
+        import numpy as np
+        import peakutils
+        threshold = 2 * abs(np.median(self.voltages))
+        data = np.array(self.voltages)
+        # CRV using peakutils lib for peak detection
+        # http://peakutils.readthedocs.io/en/latest/index.html
+        indexes = peakutils.indexes(data, thres=threshold)
+        self.beats = []
+        self.heart_beat_voltages = []
+        for index in indexes:
+            self.beats.append(self.timestamps[index])
+            self.heart_beat_voltages.append(self.voltages[index])
+        self.num_beats = len(self.beats)
+        # CRV convert list to numpy array
+        self.beats = np.array(self.beats)
