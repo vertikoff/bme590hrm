@@ -26,6 +26,7 @@ def test_duration():
     with pytest.raises(ImportError):
         HeartRateMonitor('fake_dir/not_real.csv').duration
 
+
 def test_find_beats():
     import pytest
     from heart_rate_monitor import HeartRateMonitor
