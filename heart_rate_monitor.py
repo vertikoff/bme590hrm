@@ -42,7 +42,7 @@ class HeartRateMonitor:
         data = np.array(self.voltages)
         # CRV using peakutils lib for peak detection
         # http://peakutils.readthedocs.io/en/latest/index.html
-        indexes = peakutils.indexes(data, thres = threshold)
+        indexes = peakutils.indexes(data, thres=threshold)
         self.ts_heart_beats = []
         self.heart_beat_voltages = []
         for index in indexes:
