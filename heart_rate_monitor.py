@@ -92,6 +92,8 @@ class HeartRateMonitor:
         """
 
         Calculates the mean heart rate (BPM) over a specified time range
+        :param start_ts: start range (seconds)
+        :param end_ts: end range (seconds)
         :sets mean_hr_bpm: mean heart rate (BPM) over specified time range
         """
         if(start_ts is None or not self.is_valid_ts(start_ts)):
@@ -106,6 +108,11 @@ class HeartRateMonitor:
         self.mean_hr_bpm = self.calc_bpm(num_beats_in_range, percentage_of_min)
 
     def is_valid_ts(self, timestamp):
+        """
+
+        Determines if the submitted timestamp is within the range of ECG data
+        :param timestamp: float or int (seconds)
+        """
         min_ts = self.timestamps[0]
         max_ts = self.timestamps[-1]
         if(min_ts <= timestamp <= max_ts):
