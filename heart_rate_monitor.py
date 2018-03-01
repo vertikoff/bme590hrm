@@ -1,4 +1,18 @@
 class HeartRateMonitor:
+    """
+
+    Analyzes ECG data from input .csv file
+    :param target_csv_path: location of .csv ECG data
+    :attr timstamps: list of timestamps for every data point imported from .csv
+    :attr voltages: list of voltages for every data point imported from .csv
+    :attr mean_hr_bpm: mean heart rate (bpm). Defaults to mean over entire data set
+    :attr voltage_extremes: tuple (min_voltage, max_voltage)
+    :attr duration: length (time) of .csv ECG data
+    :attr num_beats: number of beats detected in ECG data
+    :attr beats: numpy array of the timestamps when beats occurred
+    :attr heart_beat_voltage: array of voltages when beats occurred
+    """
+
     def __init__(self, target_csv_path):
         self.target_csv_path = target_csv_path
         self.timestamps = None
