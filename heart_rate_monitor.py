@@ -112,6 +112,7 @@ class HeartRateMonitor:
 
         Determines if the submitted timestamp is within the range of ECG data
         :param timestamp: float or int (seconds)
+        :returns Bool: True/False
         """
         min_ts = self.timestamps[0]
         max_ts = self.timestamps[-1]
@@ -126,6 +127,8 @@ class HeartRateMonitor:
         Determines percentage of minute for given time range
         :param start_ts: start range (seconds)
         :param end_ts: end range (seconds)
+        :returns percentage_of_minute: what percentage of a minute is the range
+        :raises TypeError: start_ts and end_ts must be float or int
         """
         if((isinstance(start_ts, int) or isinstance(start_ts, float)) and
            (isinstance(end_ts, int) or isinstance(end_ts, float))):
@@ -134,6 +137,14 @@ class HeartRateMonitor:
             raise TypeError('start_ts and end_ts must be float or int')
 
     def calc_bpm(self, beats, percentage_of_min):
+        """
+
+        Determines beats per minute (BPM)
+        :param beats: number of beats
+        :param percentage_of_min: percentage of min over range beats occurred
+        :returns bpm: heart rate BPM
+        :raises TypeError: beats and percentage_of_min must be float or int
+        """
         if((isinstance(beats, int) or isinstance(beats, float)) and
            (isinstance(percentage_of_min, int) or
            isinstance(percentage_of_min, float))):
@@ -142,6 +153,10 @@ class HeartRateMonitor:
             raise TypeError('beats and percentage_of_min must be float or int')
 
     def build_json(self):
+        """
+
+        Creates and outputs .json file with ECG analysis
+        """
         import json
         import os
         data = {}
@@ -156,6 +171,12 @@ class HeartRateMonitor:
         self.create_and_write_json_file(json_filename, json_data)
 
     def create_and_write_json_file(self, filename, contents):
+        """
+
+        Creates json file
+        :param filename: target filename
+        :contents: file contents to be written
+        """
         import json
         path_for_json_output = 'output_json_files/'
         new_file_dest = path_for_json_output + filename
