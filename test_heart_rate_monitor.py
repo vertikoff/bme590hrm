@@ -35,3 +35,55 @@ def test_find_beats():
 
     with pytest.raises(ImportError):
         HeartRateMonitor('fake_dir/not_real.csv').num_beats
+
+
+def test_is_valid_ts():
+    import pytest
+    from heart_rate_monitor import HeartRateMonitor
+    a = HeartRateMonitor('test_data/test_data1.csv')
+    b = a.is_valid_ts(15.5)
+    c = a.is_valid_ts(150000.6)
+    d = a.is_valid_ts(0)
+    assert b is True
+    assert c is False
+    assert d is True
+
+
+def test_calc_mean_hr_bpm():
+    import pytest
+    from heart_rate_monitor import HeartRateMonitor
+    a = HeartRateMonitor('test_data/test_data1.csv').mean_hr_bpm
+    assert a == 75.60756075607561
+
+    with pytest.raises(ImportError):
+        HeartRateMonitor('fake_dir/not_real.csv').num_beats
+
+
+def test_calc_percentage_of_min():
+    import pytest
+    from heart_rate_monitor import HeartRateMonitor
+    a = HeartRateMonitor('test_data/test_data1.csv')
+    b = a.calc_percentage_of_min(0, 60)
+    c = a.calc_percentage_of_min(15, 30)
+    d = a.calc_percentage_of_min(15, 90)
+    assert b == 1.0
+    assert c == 0.25
+    assert d == 1.25
+
+    with pytest.raises(TypeError):
+        a.calc_percentage_of_min('start', 45)
+
+
+def test_calc_bpm():
+    import pytest
+    from heart_rate_monitor import HeartRateMonitor
+    a = HeartRateMonitor('test_data/test_data1.csv')
+    b = a.calc_bpm(10, 1.0)
+    c = a.calc_bpm(15, 0.5)
+    d = a.calc_bpm(90, 1.5)
+    assert b == 10
+    assert c == 30
+    assert d == 60
+
+    with pytest.raises(TypeError):
+        a.calc_bpm('start', 45)
