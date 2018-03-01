@@ -5,7 +5,7 @@ class HeartRateMonitor:
     :param target_csv_path: location of .csv ECG data
     :attr timstamps: list of timestamps for every data point imported from .csv
     :attr voltages: list of voltages for every data point imported from .csv
-    :attr mean_hr_bpm: mean heart rate (bpm). Default: mean over entire data set
+    :attr mean_hr_bpm: mean heart rate (bpm). Default: mean over whole data set
     :attr voltage_extremes: tuple (min_voltage, max_voltage)
     :attr duration: length (time) of .csv ECG data
     :attr num_beats: number of beats detected in ECG data
