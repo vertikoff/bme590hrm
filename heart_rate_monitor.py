@@ -53,6 +53,11 @@ class HeartRateMonitor:
         self.voltage_extremes = (min_voltage, max_voltage)
 
     def set_duration(self):
+        """
+
+        Utilizes the self.timestamps data to determine data duration
+        :sets duration: length (time) of data read
+        """
         # CRV init the max and min timestamp
         min_ts = min(self.timestamps)
         max_ts = max(self.timestamps)
