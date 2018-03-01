@@ -89,6 +89,11 @@ class HeartRateMonitor:
         self.beats = np.array(self.beats)
 
     def calc_mean_hr_bpm(self, start_ts=None, end_ts=None):
+        """
+
+        Calculates the mean heart rate (BPM) over a specified time range
+        :sets mean_hr_bpm: mean heart rate (BPM) over specified time range
+        """
         if(start_ts is None or not self.is_valid_ts(start_ts)):
             start_ts = self.timestamps[0]
         if(end_ts is None or not self.is_valid_ts(end_ts)):
