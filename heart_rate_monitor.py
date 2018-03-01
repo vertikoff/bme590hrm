@@ -66,6 +66,12 @@ class HeartRateMonitor:
         self.duration = max_ts - min_ts
 
     def find_beats(self):
+        """
+
+        Identifies beats (as peaks) in the ECG data
+        :sets num_beats: number of detected beats in ECG data
+        :sets beats: numpy array of timestamps when beats occurred
+        """
         import numpy as np
         import peakutils
         threshold = 2 * abs(np.median(self.voltages))
