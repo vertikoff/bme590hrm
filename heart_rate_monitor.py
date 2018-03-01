@@ -42,6 +42,11 @@ class HeartRateMonitor:
         self.voltages = imported_data.voltages
 
     def set_voltage_extremes(self):
+        """
+
+        Utilizes the self.voltages data to determine min/max voltages
+        :sets voltage_extremes: tuple (min_voltage, max_voltage)
+        """
         # CRV init max and min voltage tuple
         min_voltage = min(self.voltages)
         max_voltage = max(self.voltages)
