@@ -50,3 +50,16 @@ class HeartRateMonitor:
         self.num_beats = len(self.beats)
         # CRV convert list to numpy array
         self.beats = np.array(self.beats)
+    #
+    # def mean_hr_bpm(start_ts = None, end_ts = None):
+    #     if(start_ts is None):
+    #         start_ts = self.timestamps[0]
+    #
+
+    def is_valid_ts(self, timestamp):
+        min_ts = self.timestamps[0]
+        max_ts = self.timestamps[-1]
+        if(min_ts <= timestamp <= max_ts):
+            return(True)
+        else:
+            return(False)

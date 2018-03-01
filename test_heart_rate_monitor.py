@@ -35,3 +35,15 @@ def test_find_beats():
 
     with pytest.raises(ImportError):
         HeartRateMonitor('fake_dir/not_real.csv').num_beats
+
+
+def test_is_valid_ts():
+    import pytest
+    from heart_rate_monitor import HeartRateMonitor
+    a = HeartRateMonitor('test_data/test_data1.csv')
+    b = a.is_valid_ts(15.5)
+    c = a.is_valid_ts(150000.6)
+    d = a.is_valid_ts(0)
+    assert b == True
+    assert c == False
+    assert d == True
