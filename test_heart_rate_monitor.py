@@ -44,9 +44,9 @@ def test_is_valid_ts():
     b = a.is_valid_ts(15.5)
     c = a.is_valid_ts(150000.6)
     d = a.is_valid_ts(0)
-    assert b == True
-    assert c == False
-    assert d == True
+    assert b is True
+    assert c is False
+    assert d is True
 
 
 def test_calc_mean_hr_bpm():
