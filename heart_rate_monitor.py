@@ -13,6 +13,7 @@ class HeartRateMonitor:
         self.set_voltage_extremes()
         self.set_duration()
         self.find_beats()
+        self.calc_mean_hr_bpm()
 
     def import_data(self):
         from import_csv import ImportCSV
@@ -50,11 +51,18 @@ class HeartRateMonitor:
         self.num_beats = len(self.beats)
         # CRV convert list to numpy array
         self.beats = np.array(self.beats)
-    #
-    # def mean_hr_bpm(start_ts = None, end_ts = None):
-    #     if(start_ts is None):
-    #         start_ts = self.timestamps[0]
-    #
+
+    def calc_mean_hr_bpm(self, start_ts=None, end_ts=None):
+        if(start_ts is None or not self.is_valid_ts(start_ts)):
+            start_ts = self.timestamps[0]
+        if(end_ts is None or not self.is_valid_ts(end_ts)):
+            end_ts = self.timestamps[-1]
+        num_beats_in_range = 0
+        for beat_ts in self.beats:
+            if(start_ts <= beat_ts <= end_ts):
+                num_beats_in_range += 1
+        percentage_of_min = self.calc_percentage_of_min(start_ts, end_ts)
+        self.mean_hr_bpm = self.calc_bpm(num_beats_in_range, percentage_of_min)
 
     def is_valid_ts(self, timestamp):
         min_ts = self.timestamps[0]
@@ -63,3 +71,17 @@ class HeartRateMonitor:
             return(True)
         else:
             return(False)
+
+    def calc_percentage_of_min(self, start_ts, end_ts):
+        if((isinstance(start_ts, int) or isinstance(start_ts, float)) and
+           (isinstance(end_ts, int) or isinstance(end_ts, float))):
+            return((end_ts - start_ts)/60)
+        else:
+            raise TypeError('start_ts and end_ts must be floats or ints')
+
+    def calc_bpm(self, beats, percentage_of_min):
+        if((isinstance(beats, int) or isinstance(beats, float)) and
+           (isinstance(percentage_of_min, int) or isinstance(percentage_of_min, float))):
+            return(beats/percentage_of_min)
+        else:
+            raise TypeError('beats and percentage_of_min must be floats or ints')
