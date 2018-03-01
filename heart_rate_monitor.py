@@ -185,9 +185,20 @@ class HeartRateMonitor:
             json.dump(contents, new_json_file)
 
     def remove_file_from_dir_before_creating(self, filename):
+        """
+
+        Removes file if it exists
+        :param filename: target filename
+        """
         import os
         if(os.path.isfile(filename)):
             os.remove(filename)
 
     def swap_csv_for_json_file_extension(self, filename):
+        """
+
+        Creates new file name with .json extension
+        :param filename: target filename (expects .csv)
+        :returns json_filename: target_filename (.json)
+        """
         return(filename.replace('.csv', '.json'))
