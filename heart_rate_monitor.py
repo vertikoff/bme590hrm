@@ -1,4 +1,17 @@
 class HeartRateMonitor:
+    """
+
+    Analyzes ECG data from input .csv file
+    :param target_csv_path: location of .csv ECG data
+    :attr timstamps: list of timestamps for every data point imported from .csv
+    :attr voltages: list of voltages for every data point imported from .csv
+    :attr mean_hr_bpm: mean heart rate (bpm). Default: mean over whole data set
+    :attr voltage_extremes: tuple (min_voltage, max_voltage)
+    :attr duration: length (time) of .csv ECG data
+    :attr num_beats: number of beats detected in ECG data
+    :attr beats: numpy array of the timestamps when beats occurred
+    :attr heart_beat_voltage: array of voltages when beats occurred
+    """
     def __init__(self, target_csv_path):
         self.target_csv_path = target_csv_path
         self.timestamps = None
@@ -17,18 +30,34 @@ class HeartRateMonitor:
         self.build_json()
 
     def import_data(self):
+        """
+
+        Utilizes the import_csv module to import .csv data
+        :sets timestamps: list of all timestamps in .csv data
+        :sets voltages: list of all voltages in .csv data
+        """
         from import_csv import ImportCSV
         imported_data = ImportCSV(self.target_csv_path)
         self.timestamps = imported_data.timestamps
         self.voltages = imported_data.voltages
 
     def set_voltage_extremes(self):
+        """
+
+        Utilizes the self.voltages data to determine min/max voltages
+        :sets voltage_extremes: tuple (min_voltage, max_voltage)
+        """
         # CRV init max and min voltage tuple
         min_voltage = min(self.voltages)
         max_voltage = max(self.voltages)
         self.voltage_extremes = (min_voltage, max_voltage)
 
     def set_duration(self):
+        """
+
+        Utilizes the self.timestamps data to determine data duration
+        :sets duration: length (time) of data read
+        """
         # CRV init the max and min timestamp
         min_ts = min(self.timestamps)
         max_ts = max(self.timestamps)
@@ -37,6 +66,12 @@ class HeartRateMonitor:
         self.duration = max_ts - min_ts
 
     def find_beats(self):
+        """
+
+        Identifies beats (as peaks) in the ECG data
+        :sets num_beats: number of detected beats in ECG data
+        :sets beats: numpy array of timestamps when beats occurred
+        """
         import numpy as np
         import peakutils
         threshold = 2 * abs(np.median(self.voltages))
@@ -54,6 +89,13 @@ class HeartRateMonitor:
         self.beats = np.array(self.beats)
 
     def calc_mean_hr_bpm(self, start_ts=None, end_ts=None):
+        """
+
+        Calculates the mean heart rate (BPM) over a specified time range
+        :param start_ts: start range (seconds)
+        :param end_ts: end range (seconds)
+        :sets mean_hr_bpm: mean heart rate (BPM) over specified time range
+        """
         if(start_ts is None or not self.is_valid_ts(start_ts)):
             start_ts = self.timestamps[0]
         if(end_ts is None or not self.is_valid_ts(end_ts)):
@@ -66,6 +108,12 @@ class HeartRateMonitor:
         self.mean_hr_bpm = self.calc_bpm(num_beats_in_range, percentage_of_min)
 
     def is_valid_ts(self, timestamp):
+        """
+
+        Determines if the submitted timestamp is within the range of ECG data
+        :param timestamp: float or int (seconds)
+        :returns Bool: True/False
+        """
         min_ts = self.timestamps[0]
         max_ts = self.timestamps[-1]
         if(min_ts <= timestamp <= max_ts):
@@ -74,6 +122,14 @@ class HeartRateMonitor:
             return(False)
 
     def calc_percentage_of_min(self, start_ts, end_ts):
+        """
+
+        Determines percentage of minute for given time range
+        :param start_ts: start range (seconds)
+        :param end_ts: end range (seconds)
+        :returns percentage_of_minute: what percentage of a minute is the range
+        :raises TypeError: start_ts and end_ts must be float or int
+        """
         if((isinstance(start_ts, int) or isinstance(start_ts, float)) and
            (isinstance(end_ts, int) or isinstance(end_ts, float))):
             return((end_ts - start_ts)/60)
@@ -81,6 +137,14 @@ class HeartRateMonitor:
             raise TypeError('start_ts and end_ts must be float or int')
 
     def calc_bpm(self, beats, percentage_of_min):
+        """
+
+        Determines beats per minute (BPM)
+        :param beats: number of beats
+        :param percentage_of_min: percentage of min over range beats occurred
+        :returns bpm: heart rate BPM
+        :raises TypeError: beats and percentage_of_min must be float or int
+        """
         if((isinstance(beats, int) or isinstance(beats, float)) and
            (isinstance(percentage_of_min, int) or
            isinstance(percentage_of_min, float))):
@@ -89,6 +153,10 @@ class HeartRateMonitor:
             raise TypeError('beats and percentage_of_min must be float or int')
 
     def build_json(self):
+        """
+
+        Creates and outputs .json file with ECG analysis
+        """
         import json
         import os
         data = {}
@@ -103,6 +171,12 @@ class HeartRateMonitor:
         self.create_and_write_json_file(json_filename, json_data)
 
     def create_and_write_json_file(self, filename, contents):
+        """
+
+        Creates json file
+        :param filename: target filename
+        :contents: file contents to be written
+        """
         import json
         path_for_json_output = 'output_json_files/'
         new_file_dest = path_for_json_output + filename
@@ -111,9 +185,20 @@ class HeartRateMonitor:
             json.dump(contents, new_json_file)
 
     def remove_file_from_dir_before_creating(self, filename):
+        """
+
+        Removes file if it exists
+        :param filename: target filename
+        """
         import os
         if(os.path.isfile(filename)):
             os.remove(filename)
 
     def swap_csv_for_json_file_extension(self, filename):
+        """
+
+        Creates new file name with .json extension
+        :param filename: target filename (expects .csv)
+        :returns json_filename: target_filename (.json)
+        """
         return(filename.replace('.csv', '.json'))
