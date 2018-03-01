@@ -121,6 +121,12 @@ class HeartRateMonitor:
             return(False)
 
     def calc_percentage_of_min(self, start_ts, end_ts):
+        """
+
+        Determines percentage of minute for given time range
+        :param start_ts: start range (seconds)
+        :param end_ts: end range (seconds)
+        """
         if((isinstance(start_ts, int) or isinstance(start_ts, float)) and
            (isinstance(end_ts, int) or isinstance(end_ts, float))):
             return((end_ts - start_ts)/60)
