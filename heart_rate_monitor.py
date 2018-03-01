@@ -12,7 +12,6 @@ class HeartRateMonitor:
     :attr beats: numpy array of the timestamps when beats occurred
     :attr heart_beat_voltage: array of voltages when beats occurred
     """
-
     def __init__(self, target_csv_path):
         self.target_csv_path = target_csv_path
         self.timestamps = None
@@ -31,6 +30,12 @@ class HeartRateMonitor:
         self.build_json()
 
     def import_data(self):
+        """
+
+        Utilizes the import_csv module to import .csv data
+        :sets timestamps: list of all timestamps in .csv data
+        :sets voltages: list of all voltages in .csv data
+        """
         from import_csv import ImportCSV
         imported_data = ImportCSV(self.target_csv_path)
         self.timestamps = imported_data.timestamps
