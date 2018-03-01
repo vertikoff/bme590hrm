@@ -77,11 +77,12 @@ class HeartRateMonitor:
            (isinstance(end_ts, int) or isinstance(end_ts, float))):
             return((end_ts - start_ts)/60)
         else:
-            raise TypeError('start_ts and end_ts must be floats or ints')
+            raise TypeError('start_ts and end_ts must be float or int')
 
     def calc_bpm(self, beats, percentage_of_min):
         if((isinstance(beats, int) or isinstance(beats, float)) and
-           (isinstance(percentage_of_min, int) or isinstance(percentage_of_min, float))):
+           (isinstance(percentage_of_min, int) or
+            isinstance(percentage_of_min, float))):
             return(beats/percentage_of_min)
         else:
-            raise TypeError('beats and percentage_of_min must be floats or ints')
+            raise TypeError('beats and percentage_of_min must be float or int')
