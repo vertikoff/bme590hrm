@@ -95,7 +95,7 @@ def test_build_json():
     from heart_rate_monitor import HeartRateMonitor
     json_results_path = 'output_json_files/test_data1.json'
     if(os.path.isfile(json_results_path)):
-        os.remove(json_results_path) 
+        os.remove(json_results_path)
     json_present_at_start = os.path.isfile(json_results_path)
     a = HeartRateMonitor('test_data/test_data1.csv')
     json_present_after_init = os.path.isfile(json_results_path)

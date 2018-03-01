@@ -115,6 +115,5 @@ class HeartRateMonitor:
         if(os.path.isfile(filename)):
             os.remove(filename)
 
-
     def swap_csv_for_json_file_extension(self, filename):
         return(filename.replace('.csv', '.json'))
