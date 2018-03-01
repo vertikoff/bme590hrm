@@ -14,6 +14,7 @@ class HeartRateMonitor:
         self.set_duration()
         self.find_beats()
         self.calc_mean_hr_bpm()
+        self.build_json()
 
     def import_data(self):
         from import_csv import ImportCSV
@@ -86,3 +87,33 @@ class HeartRateMonitor:
             return(beats/percentage_of_min)
         else:
             raise TypeError('beats and percentage_of_min must be float or int')
+
+    def build_json(self):
+        import json
+        import os
+        data = {}
+        data['mean_hr_bpm'] = self.mean_hr_bpm
+        data['voltage_extremes'] = self.voltage_extremes
+        data['duration'] = self.duration
+        data['num_beats'] = self.num_beats
+        data['beats'] = self.beats.tolist()
+        json_data = json.dumps(data)
+        csv_filename = os.path.basename(self.target_csv_path)
+        json_filename = self.swap_csv_for_json_file_extension(csv_filename)
+        self.create_and_write_json_file(json_filename, json_data)
+
+    def create_and_write_json_file(self, filename, contents):
+        import json
+        path_for_json_output = 'output_json_files/'
+        new_file_dest = path_for_json_output + filename
+        self.remove_file_from_dir_before_creating(new_file_dest)
+        with open(new_file_dest, 'w') as new_json_file:
+            json.dump(contents, new_json_file)
+
+    def remove_file_from_dir_before_creating(self, filename):
+        import os
+        if(os.path.isfile(filename)):
+            os.remove(filename)
+
+    def swap_csv_for_json_file_extension(self, filename):
+        return(filename.replace('.csv', '.json'))

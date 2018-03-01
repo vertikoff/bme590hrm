@@ -87,3 +87,17 @@ def test_calc_bpm():
 
     with pytest.raises(TypeError):
         a.calc_bpm('start', 45)
+
+
+def test_build_json():
+    import pytest
+    import os
+    from heart_rate_monitor import HeartRateMonitor
+    json_results_path = 'output_json_files/test_data1.json'
+    if(os.path.isfile(json_results_path)):
+        os.remove(json_results_path)
+    json_present_at_start = os.path.isfile(json_results_path)
+    a = HeartRateMonitor('test_data/test_data1.csv')
+    json_present_after_init = os.path.isfile(json_results_path)
+    assert json_present_at_start is False
+    assert json_present_after_init is True
