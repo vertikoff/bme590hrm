@@ -9,9 +9,12 @@ __pycache__/
 # CRV test_data
 test_data/*
 
-#CRV output json files
+# CRV output json files
 output_json_files/*
 !output_json_files/.gitkeep
+
+# CRV ignore docs .rst for crv_workspace
+docs/crv_workspace.rst
 
 # CRV test_data exceptions (needed for travis CI testing)
 !test_data/test_data1.csv
