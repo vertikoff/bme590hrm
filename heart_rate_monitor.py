@@ -82,7 +82,7 @@ class HeartRateMonitor:
     def calc_bpm(self, beats, percentage_of_min):
         if((isinstance(beats, int) or isinstance(beats, float)) and
            (isinstance(percentage_of_min, int) or
-            isinstance(percentage_of_min, float))):
+           isinstance(percentage_of_min, float))):
             return(beats/percentage_of_min)
         else:
             raise TypeError('beats and percentage_of_min must be float or int')
