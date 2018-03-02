@@ -128,7 +128,8 @@ class HeartRateMonitor:
         raw_voltages = np.array(self.voltages)
         if(self.voltage_extremes[0] < 0):
             logging.info('vertically shifting voltage data for peak analysis')
-            peak_detect_data = np.array([voltage + 1 for voltage in raw_voltages])
+            peak_detect_data = np.array([voltage + 1 for
+                                         voltage in raw_voltages])
         else:
             peak_detect_data = raw_voltages
         threshold = np.median(peak_detect_data)
@@ -166,12 +167,12 @@ class HeartRateMonitor:
             logging.info('setting threshold to: ' + str(threshold))
             indexes = peakutils.indexes(data, thres=threshold)
             if(len(indexes) == 0):
-                logging.info('0 peaks detected with thres=median. Retry thres=0.9')
+                logging.info('0 peaks found w/ thres=median. Retry thres=0.9')
                 indexes = peakutils.indexes(data, thres=0.9)
             return(indexes)
         else:
             logging.error('invalid param passed to detect_peaks')
-            raise TypeError('data expects numpy array. threshold expects float.')
+            raise TypeError('data needs numpy array. threshold needs float.')
 
     def calc_mean_hr_bpm(self, start_ts=None, end_ts=None):
         """
