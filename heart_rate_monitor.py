@@ -68,7 +68,7 @@ class HeartRateMonitor:
         return self.__heart_beat_voltages
 
     @heart_beat_voltages.setter
-    def beats(self, heart_beat_voltages):
+    def heart_beat_voltages(self, heart_beat_voltages):
         self.__heart_beat_voltages = find_beats()
 
     def import_data(self):
@@ -262,7 +262,7 @@ class HeartRateMonitor:
         data['voltage_extremes'] = self.voltage_extremes
         data['duration'] = self.duration
         data['num_beats'] = self.num_beats
-        data['beats'] = self.beats
+        data['beats'] = self.beats.tolist()
         json_data = json.dumps(data)
         csv_filename = os.path.basename(self.target_csv_path)
         json_filename = self.swap_csv_for_json_file_extension(csv_filename)
