@@ -55,3 +55,6 @@ Detailed logs can be found in the `logs` directory.
 
 ## Documentation 
 Documentation can be found [here](http://heart-rate-monitor-bme-590s.readthedocs.io/en/latest/py-modindex.html).
+
+## Travis CI
+Status: [![Build Status](https://travis-ci.org/vertikoff/bme590hrm.svg?branch=master)](https://travis-ci.org/vertikoff/bme590hrm)
