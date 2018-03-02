@@ -1,6 +1,5 @@
 class ImportCSV:
     """
-
     Imports .csv data
 
     :param target_csv_path: path for .csv data
@@ -16,9 +15,8 @@ class ImportCSV:
 
     def import_data(self):
         """
-
         Imports .csv data (worker function)
-        
+
         :sets timestamps: list of timestamps pulled from .csv data
         :sets voltages: list of voltages pulled from .csv data
         :raises ImportError: [.csv] is not a valid csv
