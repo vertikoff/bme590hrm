@@ -3,4 +3,5 @@ pytest-pep8
 pytest-cov
 numpy
 sphinx
+sphinx-autobuild
 peakutils

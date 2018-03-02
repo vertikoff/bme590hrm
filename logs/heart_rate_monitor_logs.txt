@@ -1,0 +1,9 @@
+03/01/2018 09:25:41 PM test_data/test_data1.csv successfully imported
+03/01/2018 09:25:41 PM test_data/test_data1.csv imported
+03/01/2018 09:32:20 PM test_data/test_data1.csv successfully imported
+03/01/2018 09:32:20 PM test_data/test_data1.csv imported
+03/01/2018 09:32:37 PM test_data/test_data1.csv successfully imported
+03/01/2018 09:32:37 PM test_data/test_data1.csv imported
+03/01/2018 09:32:37 PM voltage_extremes tuple set: (-0.68, 1.05)
+03/01/2018 09:32:37 PM duration set: 27.775
+03/01/2018 09:32:37 PM setting threshold to: 0.71
