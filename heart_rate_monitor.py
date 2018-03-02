@@ -182,7 +182,8 @@ class HeartRateMonitor:
             if(start_ts <= beat_ts <= end_ts):
                 num_beats_in_range += 1
         percentage_of_min = self.calc_percentage_of_min(start_ts, end_ts)
-        self.__mean_hr_bpm = self.calc_bpm(num_beats_in_range, percentage_of_min)
+        self.__mean_hr_bpm = self.calc_bpm(num_beats_in_range,
+                                           percentage_of_min)
         logging.info('__mean_hr_bpm: ' + str(self.__mean_hr_bpm))
 
     def is_valid_ts(self, timestamp):
