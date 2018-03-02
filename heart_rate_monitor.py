@@ -4,6 +4,7 @@ logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
                     datefmt='%m/%d/%Y %I:%M:%S %p',
                     level=logging.DEBUG)
 
+
 class HeartRateMonitor:
     """
     Analyzes ECG data from input .csv file
