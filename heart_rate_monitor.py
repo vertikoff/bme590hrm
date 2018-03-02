@@ -141,7 +141,7 @@ class HeartRateMonitor:
                 num_beats_in_range += 1
         percentage_of_min = self.calc_percentage_of_min(start_ts, end_ts)
         self.mean_hr_bpm = self.calc_bpm(num_beats_in_range, percentage_of_min)
-        logging.info('mean_hr_bpm: ' + str(mean_hr_bpm))
+        logging.info('mean_hr_bpm: ' + str(self.mean_hr_bpm))
 
     def is_valid_ts(self, timestamp):
         """
