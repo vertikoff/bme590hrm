@@ -262,8 +262,18 @@ class HeartRateMonitor:
         """
         return(filename.replace('.csv', '.json'))
 
-    def plot_peaks(self):
+    def plot_ecg_and_beats(self):
+        """
+        Creates plot with raw ECG data and detected peaks
+
+        :returns plot: plot with ECG data and detected peaks
+        """
         import matplotlib.pyplot as plt
+        import logging
+        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
+                            format='%(asctime)s %(message)s',
+                            datefmt='%m/%d/%Y %I:%M:%S %p',
+                            level=logging.DEBUG)
         plt.plot(self.timestamps, self.voltages, label="ECG raw")
         plt.plot(self.beats, self.heart_beat_voltages, 'rs', label="Beats")
         plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
@@ -272,3 +282,4 @@ class HeartRateMonitor:
         plt.xlabel('time (secs)')
         plt.ylabel('voltage')
         plt.show()
+        logging.info('plot displayed')
