@@ -35,6 +35,17 @@ Additionally, users can access any of the attributes within their python code li
 
 For a complete list of available attributes, see the [documentation](http://heart-rate-monitor-bme-590s.readthedocs.io/en/latest/py-modindex.html).
 
+## Extra features
+Users can generate plots of the raw ECG data and the detected heart beats using the `HeartRateMonitor.plot_ecg_and_beats()` method. 
+
+Example plot: 
+
+![plot.png](resources/example_plot.png)
+
+
+### Mac OSX Users Note: 
+The `matplotlib` doesn't work well with all virtual environments. If you're seeing errors, please make sure that you're using `venv` instead of `virtualenv` to create your virtual environment. More [here](https://matplotlib.org/faq/osx_framework.html). 
+
 ## Note on peak detection
 Signal processing is NOT my strong suit. To detect peaks in ECG data, I'm using the `peakutils` python module. Documentation can be found [here](http://peakutils.readthedocs.io/en/latest/index.html). 
 
