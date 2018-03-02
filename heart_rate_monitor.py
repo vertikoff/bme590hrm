@@ -2,6 +2,7 @@ class HeartRateMonitor:
     """
 
     Analyzes ECG data from input .csv file
+
     :param target_csv_path: location of .csv ECG data
     :attr timstamps: list of timestamps for every data point imported from .csv
     :attr voltages: list of voltages for every data point imported from .csv
@@ -33,6 +34,7 @@ class HeartRateMonitor:
         """
 
         Utilizes the import_csv module to import .csv data
+
         :sets timestamps: list of all timestamps in .csv data
         :sets voltages: list of all voltages in .csv data
         """
@@ -45,6 +47,7 @@ class HeartRateMonitor:
         """
 
         Utilizes the self.voltages data to determine min/max voltages
+
         :sets voltage_extremes: tuple (min_voltage, max_voltage)
         """
         # CRV init max and min voltage tuple
@@ -56,6 +59,7 @@ class HeartRateMonitor:
         """
 
         Utilizes the self.timestamps data to determine data duration
+
         :sets duration: length (time) of data read
         """
         # CRV init the max and min timestamp
@@ -69,6 +73,7 @@ class HeartRateMonitor:
         """
 
         Identifies beats (as peaks) in the ECG data
+
         :sets num_beats: number of detected beats in ECG data
         :sets beats: numpy array of timestamps when beats occurred
         """
@@ -92,6 +97,7 @@ class HeartRateMonitor:
         """
 
         Calculates the mean heart rate (BPM) over a specified time range
+
         :param start_ts: start range (seconds)
         :param end_ts: end range (seconds)
         :sets mean_hr_bpm: mean heart rate (BPM) over specified time range
@@ -111,6 +117,7 @@ class HeartRateMonitor:
         """
 
         Determines if the submitted timestamp is within the range of ECG data
+
         :param timestamp: float or int (seconds)
         :returns Bool: True/False
         """
@@ -125,6 +132,7 @@ class HeartRateMonitor:
         """
 
         Determines percentage of minute for given time range
+
         :param start_ts: start range (seconds)
         :param end_ts: end range (seconds)
         :returns percentage_of_minute: what percentage of a minute is the range
@@ -140,6 +148,7 @@ class HeartRateMonitor:
         """
 
         Determines beats per minute (BPM)
+
         :param beats: number of beats
         :param percentage_of_min: percentage of min over range beats occurred
         :returns bpm: heart rate BPM
@@ -174,6 +183,7 @@ class HeartRateMonitor:
         """
 
         Creates json file
+
         :param filename: target filename
         :contents: file contents to be written
         """
@@ -188,6 +198,7 @@ class HeartRateMonitor:
         """
 
         Removes file if it exists
+
         :param filename: target filename
         """
         import os
@@ -198,6 +209,7 @@ class HeartRateMonitor:
         """
 
         Creates new file name with .json extension
+        
         :param filename: target filename (expects .csv)
         :returns json_filename: target_filename (.json)
         """
