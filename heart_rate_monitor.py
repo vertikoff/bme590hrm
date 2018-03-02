@@ -188,7 +188,7 @@ class HeartRateMonitor:
             print('start_ts and end_ts must be float or int')
         try:
             self.__mean_hr_bpm = self.calc_bpm(num_beats_in_range,
-                                           percentage_of_min)
+                                               percentage_of_min)
         except TypeError:
             logging.error('beats and percentage_of_min must be float or int')
             print('beats and percentage_of_min must be float or int')
