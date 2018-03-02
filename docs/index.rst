@@ -9,7 +9,7 @@ Welcome to Heart Rate Monitor's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
+modules.rst
 heart_rate_monitor.rst
 import_csv.rst
 
