@@ -21,7 +21,7 @@ class HeartRateMonitor:
         self.duration = None
         self.num_beats = None
         self.beats = None
-        self.heart_beat_voltage = None
+        self.heart_beat_voltages = None
         self.import_data()
         self.set_voltage_extremes()
         self.set_duration()
@@ -261,3 +261,14 @@ class HeartRateMonitor:
         :returns json_filename: target_filename (.json)
         """
         return(filename.replace('.csv', '.json'))
+
+    def plot_peaks(self):
+        import matplotlib.pyplot as plt
+        plt.plot(self.timestamps, self.voltages, label="ECG raw")
+        plt.plot(self.beats, self.heart_beat_voltages, 'rs', label="Beats")
+        plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+                   ncol=2, mode="expand", borderaxespad=0.)
+        plt.suptitle(self.target_csv_path)
+        plt.xlabel('time (secs)')
+        plt.ylabel('voltage')
+        plt.show()
