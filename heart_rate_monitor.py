@@ -3,6 +3,7 @@ logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
                     format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p',
                     level=logging.DEBUG)
+import numpy as np
 
 
 class HeartRateMonitor:
@@ -124,22 +125,17 @@ class HeartRateMonitor:
         :sets num_beats: number of detected beats in ECG data
         :sets beats: numpy array of timestamps when beats occurred
         """
-        import numpy as np
-        import peakutils
         raw_voltages = np.array(self.voltages)
         if(self.voltage_extremes[0] < 0):
             logging.info('vertically shifting voltage data for peak analysis')
-            peak_detect_data = [voltage + 1 for voltage in raw_voltages]
+            peak_detect_data = np.array([voltage + 1 for voltage in raw_voltages])
         else:
             peak_detect_data = raw_voltages
         threshold = np.median(peak_detect_data)
-        logging.info('setting threshold to: ' + str(threshold))
-        # CRV using peakutils lib for peak detection
-        # http://peakutils.readthedocs.io/en/latest/index.html
-        indexes = peakutils.indexes(peak_detect_data, thres=threshold)
-        if(len(indexes) == 0):
-            logging.info('0 peaks detected with thres=median. Retry thres=0.9')
-            indexes = peakutils.indexes(peak_detect_data, thres=0.9)
+        try:
+            indexes = self.detect_peaks(peak_detect_data, threshold)
+        except TypeError:
+            print('data expects numpy array. threshold expects float')
         self.__beats = []
         self.__heart_beat_voltages = []
         for index in indexes:
@@ -154,6 +150,28 @@ class HeartRateMonitor:
         # CRV convert list to numpy array
         self.__beats = np.array(self.__beats)
         logging.info('beats numpy array created')
+
+    def detect_peaks(self, data, threshold):
+        """
+        Identifies peaks in a data set
+
+        :param data: numpy array to find peaks in
+        :param threshold: threshold to attempt first peak detection with
+        :raises TypeError: invalid param passed to detect_peaks
+        """
+        import peakutils
+        # CRV using peakutils lib for peak detection
+        # http://peakutils.readthedocs.io/en/latest/index.html
+        if(type(data) is np.ndarray and isinstance(threshold, float)):
+            logging.info('setting threshold to: ' + str(threshold))
+            indexes = peakutils.indexes(data, thres=threshold)
+            if(len(indexes) == 0):
+                logging.info('0 peaks detected with thres=median. Retry thres=0.9')
+                indexes = peakutils.indexes(data, thres=0.9)
+            return(indexes)
+        else:
+            logging.error('invalid param passed to detect_peaks')
+            raise TypeError('data expects numpy array. threshold expects float.')
 
     def calc_mean_hr_bpm(self, start_ts=None, end_ts=None):
         """
