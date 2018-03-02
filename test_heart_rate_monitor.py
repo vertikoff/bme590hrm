@@ -101,3 +101,13 @@ def test_build_json():
     json_present_after_init = os.path.isfile(json_results_path)
     assert json_present_at_start is False
     assert json_present_after_init is True
+
+
+def test_detect_peaks():
+    import pytest
+    from heart_rate_monitor import HeartRateMonitor
+    a = HeartRateMonitor('test_data/test_data1.csv')
+    assert a.num_beats == 35
+
+    with pytest.raises(ImportError):
+        HeartRateMonitor('fake_dir/not_real.csv').num_beats
