@@ -1,3 +1,10 @@
+import logging
+logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
+                    format='%(asctime)s %(message)s',
+                    datefmt='%m/%d/%Y %I:%M:%S %p',
+                    level=logging.DEBUG)
+
+
 class HeartRateMonitor:
     """
     Analyzes ECG data from input .csv file
@@ -79,11 +86,6 @@ class HeartRateMonitor:
         :sets voltages: list of all voltages in .csv data
         """
         from import_csv import ImportCSV
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         imported_data = ImportCSV(self.target_csv_path)
         self.timestamps = imported_data.timestamps
         self.voltages = imported_data.voltages
@@ -95,11 +97,6 @@ class HeartRateMonitor:
 
         :sets voltage_extremes: tuple (min_voltage, max_voltage)
         """
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         # CRV init max and min voltage tuple
         min_voltage = min(self.voltages)
         max_voltage = max(self.voltages)
@@ -112,11 +109,6 @@ class HeartRateMonitor:
 
         :sets duration: length (time) of data read
         """
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         # CRV init the max and min timestamp
         min_ts = min(self.timestamps)
         max_ts = max(self.timestamps)
@@ -134,11 +126,6 @@ class HeartRateMonitor:
         """
         import numpy as np
         import peakutils
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         raw_voltages = np.array(self.voltages)
         if(self.voltage_extremes[0] < 0):
             logging.info('vertically shifting voltage data for peak analysis')
@@ -176,11 +163,6 @@ class HeartRateMonitor:
         :param end_ts: end range (seconds)
         :sets mean_hr_bpm: mean heart rate (BPM) over specified time range
         """
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         if(start_ts is None or not self.is_valid_ts(start_ts)):
             start_ts = self.timestamps[0]
             logging.warning('invalid start_ts passed in calc_mean_hr_bpm')
@@ -227,11 +209,6 @@ class HeartRateMonitor:
         :returns percentage_of_minute: what percentage of a minute is the range
         :raises TypeError: start_ts and end_ts must be float or int
         """
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         if((isinstance(start_ts, int) or isinstance(start_ts, float)) and
            (isinstance(end_ts, int) or isinstance(end_ts, float))):
             return((end_ts - start_ts)/60)
@@ -248,11 +225,6 @@ class HeartRateMonitor:
         :returns bpm: heart rate BPM
         :raises TypeError: beats and percentage_of_min must be float or int
         """
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         if((isinstance(beats, int) or isinstance(beats, float)) and
            (isinstance(percentage_of_min, int) or
            isinstance(percentage_of_min, float))):
@@ -285,11 +257,6 @@ class HeartRateMonitor:
         :param filename: target filename
         :contents: file contents to be written
         """
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         import json
         path_for_json_output = 'output_json_files/'
         new_file_dest = path_for_json_output + filename
@@ -304,11 +271,6 @@ class HeartRateMonitor:
 
         :param filename: target filename
         """
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         import os
         if(os.path.isfile(filename)):
             os.remove(filename)
@@ -330,11 +292,6 @@ class HeartRateMonitor:
         :returns plot: plot with ECG data and detected peaks
         """
         import matplotlib.pyplot as plt
-        import logging
-        logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=logging.DEBUG)
         plt.plot(self.timestamps, self.voltages, label="ECG raw")
         plt.plot(self.beats, self.heart_beat_voltages, 'rs', label="Beats")
         plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
