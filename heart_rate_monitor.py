@@ -139,18 +139,25 @@ class HeartRateMonitor:
                             format='%(asctime)s %(message)s',
                             datefmt='%m/%d/%Y %I:%M:%S %p',
                             level=logging.DEBUG)
-        threshold = abs(np.median(self.voltages))
-        # self.threshold = threshold
+        raw_voltages = np.array(self.voltages)
+        if(self.voltage_extremes[0] < 0):
+            logging.info('vertically shifting voltage data for peak analysis')
+            peak_detect_data = [voltage + 1 for voltage in raw_voltages]
+        else:
+            peak_detect_data = raw_voltages
+        threshold = np.median(peak_detect_data)
         logging.info('setting threshold to: ' + str(threshold))
-        data = np.array(self.voltages)
         # CRV using peakutils lib for peak detection
         # http://peakutils.readthedocs.io/en/latest/index.html
-        indexes = peakutils.indexes(data, thres=threshold)
+        indexes = peakutils.indexes(peak_detect_data, thres=threshold)
+        if(len(indexes) == 0):
+            logging.info('0 peaks detected with thres=median. Retry thres=0.9')
+            indexes = peakutils.indexes(peak_detect_data, thres=0.9)
         self.__beats = []
         self.__heart_beat_voltages = []
         for index in indexes:
             # CRV do one one threshold check
-            if(self.voltages[index] > threshold):
+            if(peak_detect_data[index] > threshold):
                 self.__beats.append(self.timestamps[index])
                 self.__heart_beat_voltages.append(self.voltages[index])
         self.__num_beats = len(self.beats)
