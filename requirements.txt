@@ -5,3 +5,4 @@ numpy
 sphinx
 sphinx-autobuild
 peakutils
+matplotlib
