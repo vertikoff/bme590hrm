@@ -23,6 +23,11 @@ class ImportCSV:
         """
         import os.path
         import numpy as np
+        import logging
+        logging.basicConfig(filename="logs/import_logs.txt",
+                            format='%(asctime)s %(message)s',
+                            datefmt='%m/%d/%Y %I:%M:%S %p',
+                            level=logging.DEBUG)
         if(os.path.isfile(self.target_csv_path) and
            self.target_csv_path.endswith('.csv')):
             # CRV - method used here found at:
@@ -31,5 +36,7 @@ class ImportCSV:
                                  names=['time', 'voltage'])
             self.timestamps = data['time']
             self.voltages = data['voltage']
+            logging.info(self.target_csv_path + ' successfully imported')
         else:
+            logging.warning('csv import error. File: ' + self.target_csv_path)
             raise ImportError(self.target_csv_path + ' is not a valid csv')
