@@ -62,7 +62,7 @@ class HeartRateMonitor:
         min_voltage = min(self.voltages)
         max_voltage = max(self.voltages)
         self.voltage_extremes = (min_voltage, max_voltage)
-        logging.info('voltage_extremes tuple set: ' + str(self.voltage_extremes))
+        logging.info('voltage_extremes set: ' + str(self.voltage_extremes))
 
     def set_duration(self):
         """

@@ -7,3 +7,15 @@
 03/01/2018 09:32:37 PM voltage_extremes tuple set: (-0.68, 1.05)
 03/01/2018 09:32:37 PM duration set: 27.775
 03/01/2018 09:32:37 PM setting threshold to: 0.71
+03/01/2018 09:42:20 PM test_data/test_data1.csv successfully imported
+03/01/2018 09:42:20 PM test_data/test_data1.csv imported
+03/01/2018 09:42:20 PM voltage_extremes tuple set: (-0.68, 1.05)
+03/01/2018 09:42:20 PM duration set: 27.775
+03/01/2018 09:42:20 PM setting threshold to: 0.71
+03/01/2018 09:42:20 PM num_beats: 35
+03/01/2018 09:42:20 PM beats numpy array created
+03/01/2018 09:42:20 PM invalid start_ts passed in calc_mean_hr_bpm
+03/01/2018 09:42:20 PM invalid end_ts passed in calc_mean_hr_bpm
+03/01/2018 09:42:20 PM mean_hr_bpm: 75.60756075607561
+03/01/2018 09:42:20 PM removing output_json_files/test_data1.json
+03/01/2018 09:42:20 PM json file written to: output_json_files/
