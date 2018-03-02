@@ -1,9 +1,9 @@
+import numpy as np
 import logging
 logging.basicConfig(filename="logs/heart_rate_monitor_logs.txt",
                     format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p',
                     level=logging.DEBUG)
-import numpy as np
 
 
 class HeartRateMonitor:
