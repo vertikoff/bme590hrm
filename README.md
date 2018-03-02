@@ -38,6 +38,9 @@ For a complete list of available attributes, see the [documentation](http://hear
 ## Extra features
 Users can generate plots of the raw ECG data and the detected heart beats using the `HeartRateMonitor.plot_ecg_and_beats()` method.
 
+### Mac OSX Users Note: 
+The `matplotlib` doesn't work well with all virtual environments. If you're seeing errors, please make sure that you're using `venv` instead of `virtualenv` to create your virtual environment. More [here](https://matplotlib.org/faq/osx_framework.html). 
+
 ## Note on peak detection
 Signal processing is NOT my strong suit. To detect peaks in ECG data, I'm using the `peakutils` python module. Documentation can be found [here](http://peakutils.readthedocs.io/en/latest/index.html). 
 
