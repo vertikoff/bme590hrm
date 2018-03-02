@@ -11,6 +11,7 @@ test_data/*
 
 # CRV logs output
 logs/*
+!logs/.gitkeep
 
 # CRV output json files
 output_json_files/*
