@@ -16,18 +16,60 @@ class HeartRateMonitor:
         self.target_csv_path = target_csv_path
         self.timestamps = None
         self.voltages = None
-        self.mean_hr_bpm = None
-        self.voltage_extremes = None
-        self.duration = None
-        self.num_beats = None
-        self.beats = None
-        self.heart_beat_voltages = None
         self.import_data()
         self.set_voltage_extremes()
         self.set_duration()
         self.find_beats()
         self.calc_mean_hr_bpm()
         self.build_json()
+
+    @property
+    def voltage_extremes(self):
+        return self.__voltage_extremes
+
+    @voltage_extremes.setter
+    def voltage_extremes(self, voltage_extremes):
+        self.__voltage_extremes = set_voltage_extremes()
+
+    @property
+    def mean_hr_bpm(self):
+        return self.__mean_hr_bpm
+
+    @mean_hr_bpm.setter
+    def mean_hr_bpm(self, mean_hr_bpm):
+        self.__mean_hr_bpm = calc_mean_hr_bpm()
+
+    @property
+    def duration(self):
+        return self.__duration
+
+    @duration.setter
+    def duration(self, duration):
+        self.__duration = set_duration()
+
+    @property
+    def num_beats(self):
+        return self.__num_beats
+
+    @num_beats.setter
+    def num_beats(self, num_beats):
+        self.__num_beats = find_beats()
+
+    @property
+    def beats(self):
+        return self.__beats
+
+    @beats.setter
+    def beats(self, beats):
+        self.__beats = find_beats()
+
+    @property
+    def heart_beat_voltages(self):
+        return self.__heart_beat_voltages
+
+    @heart_beat_voltages.setter
+    def beats(self, heart_beat_voltages):
+        self.__heart_beat_voltages = find_beats()
 
     def import_data(self):
         """
@@ -61,8 +103,8 @@ class HeartRateMonitor:
         # CRV init max and min voltage tuple
         min_voltage = min(self.voltages)
         max_voltage = max(self.voltages)
-        self.voltage_extremes = (min_voltage, max_voltage)
-        logging.info('voltage_extremes set: ' + str(self.voltage_extremes))
+        self.__voltage_extremes = (min_voltage, max_voltage)
+        logging.info('voltage_extremes set: ' + str(self.__voltage_extremes))
 
     def set_duration(self):
         """
@@ -80,8 +122,8 @@ class HeartRateMonitor:
         max_ts = max(self.timestamps)
         # CRV - calculating the diff here just incase there is an offset error
         # (earliest ts in data set NOT 0)
-        self.duration = max_ts - min_ts
-        logging.info('duration set: ' + str(self.duration))
+        self.__duration = max_ts - min_ts
+        logging.info('duration set: ' + str(self.__duration))
 
     def find_beats(self):
         """
@@ -103,17 +145,17 @@ class HeartRateMonitor:
         # CRV using peakutils lib for peak detection
         # http://peakutils.readthedocs.io/en/latest/index.html
         indexes = peakutils.indexes(data, thres=threshold)
-        self.beats = []
-        self.heart_beat_voltages = []
+        self.__beats = []
+        self.__heart_beat_voltages = []
         for index in indexes:
-            self.beats.append(self.timestamps[index])
-            self.heart_beat_voltages.append(self.voltages[index])
-        self.num_beats = len(self.beats)
-        logging.info('num_beats: ' + str(self.num_beats))
-        if(self.num_beats == 0):
+            self.__beats.append(self.timestamps[index])
+            self.__heart_beat_voltages.append(self.voltages[index])
+        self.__num_beats = len(self.beats)
+        logging.info('num_beats: ' + str(self.__num_beats))
+        if(self.__num_beats == 0):
             logging.warning('NO BEATS DETECTED')
         # CRV convert list to numpy array
-        self.beats = np.array(self.beats)
+        self.__beats = np.array(self.__beats)
         logging.info('beats numpy array created')
 
     def calc_mean_hr_bpm(self, start_ts=None, end_ts=None):
@@ -140,8 +182,9 @@ class HeartRateMonitor:
             if(start_ts <= beat_ts <= end_ts):
                 num_beats_in_range += 1
         percentage_of_min = self.calc_percentage_of_min(start_ts, end_ts)
-        self.mean_hr_bpm = self.calc_bpm(num_beats_in_range, percentage_of_min)
-        logging.info('mean_hr_bpm: ' + str(self.mean_hr_bpm))
+        self.__mean_hr_bpm = self.calc_bpm(num_beats_in_range,
+                                           percentage_of_min)
+        logging.info('__mean_hr_bpm: ' + str(self.__mean_hr_bpm))
 
     def is_valid_ts(self, timestamp):
         """
@@ -211,7 +254,7 @@ class HeartRateMonitor:
         data['voltage_extremes'] = self.voltage_extremes
         data['duration'] = self.duration
         data['num_beats'] = self.num_beats
-        data['beats'] = self.beats.tolist()
+        data['beats'] = self.beats
         json_data = json.dumps(data)
         csv_filename = os.path.basename(self.target_csv_path)
         json_filename = self.swap_csv_for_json_file_extension(csv_filename)
