@@ -149,7 +149,7 @@ class HeartRateMonitor:
         self.__beats = []
         self.__heart_beat_voltages = []
         for index in indexes:
-            #CRV do one one threshold check
+            # CRV do one one threshold check
             if(self.voltages[index] > threshold):
                 self.__beats.append(self.timestamps[index])
                 self.__heart_beat_voltages.append(self.voltages[index])
