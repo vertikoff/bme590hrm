@@ -21,22 +21,31 @@ First, ensure that you're in a virtual environment and have installed all of the
 
 Import the class:
 
-```from heart_rate_monitor import HeartRateMonitor```
+```py
+from heart_rate_monitor import HeartRateMonitor
+```
 
 Next, create an instance of the class (and pass in a local CSV): 
 
-```a = HeartRateMonitor('test_data/test_data1.csv')```
+```py
+a = HeartRateMonitor('test_data/test_data1.csv')
+```
 
 Notice that a JSON file with the attributes described above has been created in the `output_json_files` directory. 
 
 Additionally, users can access any of the attributes within their python code like so:
 
-`ecg_duration = a.duration`
+```py
+ecg_duration = a.duration
+```
 
 For a complete list of available attributes, see the [documentation](http://heart-rate-monitor-bme-590s.readthedocs.io/en/latest/py-modindex.html).
 
 ## Extra features
-Users can generate plots of the raw ECG data and the detected heart beats using the `HeartRateMonitor.plot_ecg_and_beats()` method. 
+Users can generate plots of the raw ECG data and the detected heart beats using: 
+```py
+HeartRateMonitor.plot_ecg_and_beats()
+``` 
 
 Example plot: 
 
